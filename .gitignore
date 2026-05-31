@@ -1,0 +1,16 @@
+# FastF1 cache (large, regenerable)
+cache/
+*.ff1pkl
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Jupyter
+*.nbconvert.ipynb
+
+# OS
+.DS_Store
