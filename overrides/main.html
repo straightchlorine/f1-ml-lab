@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  {% set real_page = page and page.file and page.url != "404.html" %}
+  {% set site = config.site_url %}
+  {% set lang = config.theme.language %}
+  {% if real_page %}
+    {#- Bilingual site built twice (PL at /, EN at /en/) with identical page paths -
+    hreflang pairs are a concatenation. -#}
+    {% set url_pl = config.extra.lang_bases.pl ~ page.url %}
+    {% set url_en = config.extra.lang_bases.en ~ page.url %}
+    <link rel="alternate" hreflang="pl" href="{{ url_pl }}">
+    <link rel="alternate" hreflang="en" href="{{ url_en }}">
+    <link rel="alternate" hreflang="x-default" href="{{ url_pl }}">
+  {% endif %}
+  <meta property="og:locale" content="{{ config.extra.og_locale }}">
+  <meta property="og:locale:alternate" content="{{ config.extra.og_locale_alternate }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": {{ (site ~ "#website") | tojson }},
+        "name": {{ config.site_name | tojson }},
+        "url": {{ site | tojson }},
+        "description": {{ config.site_description | tojson }},
+        "inLanguage": {{ lang | tojson }},
+        "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }]
+      },
+      {
+        "@type": "Person",
+        "@id": {{ (site ~ "#piotr") | tojson }},
+        "name": "Piotr Krzysztof Lis",
+        "alternateName": "Piotr Krzysztof",
+        "url": "https://piotrkrzysztof.dev",
+        "sameAs": ["https://github.com/straightchlorine", "https://codeberg.org/piotrkrzysztof", "https://pypi.org/user/straightchlorine", "https://hub.docker.com/u/straightchlorine", "https://www.linkedin.com/in/straightchlorine"]
+      },
+      {
+        "@type": "Person",
+        "@id": {{ (site ~ "#jakub") | tojson }},
+        "name": "Jakub Kucharski",
+        "url": "https://github.com/kubson2002k",
+        "sameAs": ["https://github.com/kubson2002k", "https://www.linkedin.com/in/jakub-kucharski-360811305/"]
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": {{ (config.repo_url ~ "#code") | tojson }},
+        "name": "f1-ml-lab",
+        "codeRepository": {{ config.repo_url | tojson }},
+        "programmingLanguage": "Python",
+        "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }]
+      }
+      {%- if real_page %},
+      {%- set src = page.file.src_path %}
+      {%- set page_url = site ~ page.url %}
+      {%- set other = (url_en if lang == "pl" else url_pl) ~ "#page" %}
+      {
+        "@type": {{ ("TechArticle" if src.endswith(".ipynb") else ("AboutPage" if src == "about.md" else "WebPage")) | tojson }},
+        "@id": {{ (page_url ~ "#page") | tojson }},
+        "url": {{ page_url | tojson }},
+        "headline": {{ page.title | tojson }},
+        "description": {{ (page.meta.description or config.site_description) | tojson }},
+        "inLanguage": {{ lang | tojson }},
+        "image": {{ (site ~ "assets/images/social/" ~ ((page.url | trim("/")) or "index") ~ ".png") | tojson }},
+        "isPartOf": { "@id": {{ (site ~ "#website") | tojson }} },
+        "isBasedOn": { "@id": {{ (config.repo_url ~ "#code") | tojson }} },
+        "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }],
+        {{ ("workTranslation" if lang == "pl" else "translationOfWork") | tojson }}: { "@id": {{ other | tojson }} }
+      }
+      {%- endif %}
+    ]
+  }
+  </script>
+{% endblock %}

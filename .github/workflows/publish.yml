@@ -1,0 +1,105 @@
+name: Site
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'notebooks/**'
+      - 'docs/**'
+      - 'docs-en/**'
+      - 'overrides/**'
+      - 'hooks/**'
+      - 'scripts/**'
+      - 'mkdocs.yml'
+      - 'mkdocs.en.yml'
+      - 'requirements-docs.txt'
+      - '.github/workflows/publish.yml'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'notebooks/**'
+      - 'docs/**'
+      - 'docs-en/**'
+      - 'overrides/**'
+      - 'hooks/**'
+      - 'scripts/**'
+      - 'mkdocs.yml'
+      - 'mkdocs.en.yml'
+      - 'requirements-docs.txt'
+      - '.github/workflows/publish.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: requirements-docs.txt
+
+      # cairo for social cards
+      - name: System libraries
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends libcairo2
+
+      - name: Install
+        run: |
+          uv venv --python 3.12
+          uv pip install -r requirements-docs.txt
+
+      # Line anchors in cross-notebook links are derived from cell ids.
+      # Stale anchors are fixed for this build but flagged, so the committed
+      # notebooks get fixed too.
+      - name: Cross-notebook link anchors
+        run: |
+          .venv/bin/python scripts/link_refs.py --check || {
+            [ $? -eq 1 ] || exit 1  # 2 = broken link, fail the build
+            echo "::warning::Stale line anchors in notebook links. Run: python scripts/link_refs.py (and commit)."
+            .venv/bin/python scripts/link_refs.py
+          }
+
+      # nbconvert drops Plotly outputs; rewrites docs/ and docs-en/ in place
+      # (CI checkout only)
+      - name: Render Plotly outputs
+        run: .venv/bin/python scripts/render_plotly.py docs docs-en
+
+      - name: Build PL and EN
+        run: |
+          .venv/bin/mkdocs build --strict -f mkdocs.yml
+          .venv/bin/mkdocs build --strict -f mkdocs.en.yml
+
+      - name: Upload artifact
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

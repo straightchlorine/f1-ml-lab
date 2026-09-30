@@ -1,0 +1,7 @@
+{#- "View source" goes to GitHub's blob, not the raw download; edit_url is set per page in hooks/seo.py. -#}
+{% if page.edit_url and "content.action.view" in features %}
+  <a href="{{ page.edit_url }}" title="{{ lang.t('action.view') }}" class="md-content__button md-icon">
+    {% set icon = config.theme.icon.view or "material/file-eye-outline" %}
+    {% include ".icons/" ~ icon ~ ".svg" %}
+  </a>
+{% endif %}

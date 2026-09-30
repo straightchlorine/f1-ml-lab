@@ -1,0 +1,53 @@
+INHERIT: mkdocs.yml
+site_name: Machine Learning in F1
+site_description: Six Jupyter notebooks that go from raw Formula 1 data (FastF1) to lap-pace and podium models and an analysis of their errors.
+site_url: https://f1.piotrkrzysztof.dev/en/
+docs_dir: docs-en
+site_dir: site/en
+theme:
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-7
+        name: Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Light mode
+
+nav:
+  - Introduction: index.md
+  - First look at the data: 00-data-load.ipynb
+  - Building the dataset: 01-build-dataset.ipynb
+  - Exploring the data: 02-eda.ipynb
+  - "Regression: lap time": 03-regression-laptime.ipynb
+  - "Classification: podium": 04-classification-podium.ipynb
+  - Error analysis: 05-error-analysis.ipynb
+  - About: about.md
+
+extra:
+  og_locale: en_US
+  og_locale_alternate: pl_PL
+  social:
+    - icon: fontawesome/solid/globe
+      link: https://piotrkrzysztof.dev
+      name: piotrkrzysztof.dev
+    - icon: fontawesome/brands/github
+      link: https://github.com/straightchlorine/f1-ml-lab
+      name: Source code on GitHub
+  descriptions:
+    index.md: "Machine learning on Formula 1 data: from raw FastF1 data to lap-pace and podium models and an analysis of their errors."
+    00-data-load.ipynb: "A first look at the FastF1 API on the 2024 Italian Grand Prix: laps, weather, telemetry and a first plot of lap time against tire age."
+    01-build-dataset.ipynb: "Building the 2023-2024 datasets: a loop over races, lap cleaning, qualifying times and a driver-race table for podium classification."
+    02-eda.ipynb: "Exploring the data: lap-time distribution, how much variance the track explains, tire degradation without the fuel effect, and grid position vs podium."
+    03-regression-laptime.ipynb: "Lap-time regression in four acts: failure on a single season, more data, a change of target to relative pace, and a timed benchmark of algorithms."
+    04-classification-podium.ipynb: "Podium classification from pre-race features: the accuracy trap, data leakage, logistic regression, a classifier benchmark, class weights and calibration."
+    05-error-analysis.ipynb: "Error analysis of both models: regression residuals, worst-predicted laps, the confusion matrix, probability calibration and upsets nobody could predict."
+    about.md: "Who made this project, on what data, how to run it and how to read the notebooks."

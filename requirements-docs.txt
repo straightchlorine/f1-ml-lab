@@ -1,0 +1,5 @@
+# uv venv --python 3.12 .venv && uv pip install --python .tmpenv/bin/python -r requirements-docs.txt
+mkdocs==1.6.1
+mkdocs-material[imaging]==9.7.7
+mkdocs-jupyter==0.26.3
+nbconvert==7.17.1

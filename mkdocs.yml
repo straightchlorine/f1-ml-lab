@@ -1,0 +1,103 @@
+site_name: Uczenie maszynowe w F1
+site_description: Sześć notebooków Jupyter, które prowadzą od surowych danych Formuły 1 (FastF1) do modeli tempa okrążenia i podium oraz analizy ich błędów.
+site_author: Piotr Krzysztof Lis, Jakub Kucharski
+site_url: https://f1.piotrkrzysztof.dev/
+repo_url: https://github.com/straightchlorine/f1-ml-lab
+repo_name: straightchlorine/f1-ml-lab
+edit_uri: blob/master/notebooks/ # hooks/seo.py rewrites this per page (notebooks/ vs docs/ vs docs-en/)
+copyright: Copyright &copy; 2026 Piotr Krzysztof Lis, Jakub Kucharski
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: pl
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-7
+        name: Tryb ciemny
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Tryb jasny
+  features:
+    - navigation.top
+    - navigation.footer
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.view
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+    view: material/eye
+
+nav:
+  - Wprowadzenie: index.md
+  - Pierwszy kontakt z danymi: 00-data-load.ipynb
+  - Budowa zbioru danych: 01-build-dataset.ipynb
+  - Eksploracja danych: 02-eda.ipynb
+  - "Regresja: czas okrążenia": 03-regression-laptime.ipynb
+  - "Klasyfikacja: podium": 04-classification-podium.ipynb
+  - Analiza błędów: 05-error-analysis.ipynb
+  - O projekcie: about.md
+
+plugins:
+  - search
+  - social:
+      cards_layout_options:
+        font_family: Roboto
+  - mkdocs-jupyter:
+      include_source: false # the copies in site/ are CI-rewritten; view-source links to GitHub instead
+      ignore_h1_titles: true # nav titles come from `nav:` above, not from notebook H1s
+      # mkdocs-jupyter ships nbconvert's MathJax config but an EMPTY script URL, so $R^2$ stays raw without this
+      custom_mathjax_url: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML-full,Safe
+
+hooks:
+  - hooks/seo.py
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.superfences
+
+extra:
+  alternate:
+    - name: Polski
+      link: /
+      lang: pl
+    - name: English
+      link: /en/
+      lang: en
+  lang_bases:
+    pl: https://f1.piotrkrzysztof.dev/
+    en: https://f1.piotrkrzysztof.dev/en/
+  og_locale: pl_PL
+  og_locale_alternate: en_US
+  social:
+    - icon: fontawesome/solid/globe
+      link: https://piotrkrzysztof.dev
+      name: piotrkrzysztof.dev
+    - icon: fontawesome/brands/github
+      link: https://github.com/straightchlorine/f1-ml-lab
+      name: Kod źródłowy na GitHubie
+  descriptions:
+    index.md: "Uczenie maszynowe na danych Formuły 1: od surowych danych FastF1 do modeli tempa okrążenia i podium oraz analizy ich błędów."
+    00-data-load.ipynb: "Pierwszy kontakt z API FastF1 na przykładzie Grand Prix Włoch 2024: okrążenia, pogoda, telemetria i pierwszy wykres czasu okrążenia względem wieku opon."
+    01-build-dataset.ipynb: "Budowa zbiorów danych z sezonów 2023-2024: pętla po wyścigach, czyszczenie okrążeń, czasy kwalifikacji i tabela kierowca-wyścig pod klasyfikację podium."
+    02-eda.ipynb: "Eksploracja danych: rozkład czasów okrążeń, ile zmienności tłumaczy tor, degradacja opon po usunięciu efektu paliwa i związek pozycji startowej z podium."
+    03-regression-laptime.ipynb: "Regresja czasu okrążenia w czterech aktach: porażka na jednym sezonie, więcej danych, zmiana celu na tempo względne i benchmark algorytmów z pomiarem czasu."
+    04-classification-podium.ipynb: "Klasyfikacja podium z cech przedwyścigowych: pułapka trafności, wyciek danych, regresja logistyczna, benchmark klasyfikatorów, wagi klas i kalibracja."
+    05-error-analysis.ipynb: "Analiza błędów obu modeli: residua regresji, najgorsze okrążenia, macierz pomyłek, kalibracja prawdopodobieństw i niespodzianki, których nie da się przewidzieć."
+    about.md: "Kto zrobił ten projekt, na jakich danych, jak go uruchomić i jak czytać notebooki."
+
+extra_javascript:
+  - https://cdn.plot.ly/plotly-3.1.0.min.js
