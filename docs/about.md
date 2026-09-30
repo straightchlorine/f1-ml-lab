@@ -13,7 +13,7 @@ Ten serwis to zapis projektu zaliczeniowego z uczenia maszynowego (studia magist
 
 - Porażki modeli są w notebookach celowo: ujemne `R^2` w regresji, pułapka trafności i wyciek danych w klasyfikacji. Najpierw pokazujemy, dlaczego coś nie działa, a dopiero potem naprawę.
 - Każdy model ma benchmark z pomiarem czasu uczenia i predykcji, bo prosty model bywa jednocześnie najlepszy i najtańszy.
-- W wersji angielskiej przetłumaczone są komentarze (komórki markdown); kod, wydruki i podpisy wykresów pozostają po polsku.
+- W wersji angielskiej przetłumaczone są komentarze (komórki markdown); kod, wydruki i podpisy wykresów są w obu wersjach takie same (po polsku, poza notebookiem 00).
 
 ## Jak uruchomić
 
@@ -22,10 +22,11 @@ git clone https://github.com/straightchlorine/f1-ml-lab.git
 cd f1-ml-lab
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/python -m ipykernel install --user --name f1-ml-lab   # kernel, którego używają notebooki
 .venv/bin/jupyter lab   # notebooki w katalogu notebooks/, po kolei 00 -> 05
 ```
 
-Notebook 01 pobiera dane z FastF1 (pierwsze uruchomienie trwa długo, kolejne czytają z cache). Pozostałe notebooki startują z plików parquet.
+Notebooki 00 i 01 pobierają dane z FastF1 (pierwsze uruchomienie trwa długo, kolejne czytają z cache). Notebooki 02-05 startują z plików parquet.
 
 ## Autorzy
 
@@ -33,3 +34,7 @@ Notebook 01 pobiera dane z FastF1 (pierwsze uruchomienie trwa długo, kolejne cz
 - **Jakub Kucharski** - [GitHub](https://github.com/kubson2002k) | [LinkedIn](https://www.linkedin.com/in/jakub-kucharski-360811305/)
 
 Kod źródłowy: [straightchlorine/f1-ml-lab](https://github.com/straightchlorine/f1-ml-lab). Strona zbudowana w MkDocs Material z mkdocs-jupyter.
+
+## Licencja
+
+Kod i notebooki: [MIT](https://github.com/straightchlorine/f1-ml-lab/blob/master/LICENSE). Dane w katalogu `data/` pochodzą z pomiaru czasu Formuły 1 (przez FastF1) i są dołączone tylko po to, żeby notebooki dało się uruchomić.

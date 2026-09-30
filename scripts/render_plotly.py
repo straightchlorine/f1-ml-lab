@@ -4,7 +4,7 @@
 nbconvert (used by mkdocs-jupyter) silently drops
 application/vnd.plotly.v1+json outputs, so every chart would vanish from the
 site. This replaces each such output with a text/html div + Plotly.newPlot
-call; plotly.js itself is loaded once per page via extra_javascript.
+call; plotly.js itself is loaded once per notebook page (see PLOTLY_JS).
 
 Run in CI before `mkdocs build` — it rewrites files in place (replacing
 symlinks with transformed copies), so never run it on a working tree you
@@ -15,6 +15,9 @@ import sys
 from pathlib import Path
 
 MIME = "application/vnd.plotly.v1+json"
+# Loaded with the first chart of each notebook, so pages without charts never fetch
+# it. `defer` runs it before DOMContentLoaded, when the charts below are drawn.
+PLOTLY_JS = '<script defer src="https://cdn.plot.ly/plotly-3.1.0.min.js"></script>\n'
 
 
 def transform(path: Path) -> int:
@@ -30,7 +33,8 @@ def transform(path: Path) -> int:
             data = json.dumps(fig.get("data", [])).replace("</", "<\\/")
             layout = json.dumps(fig.get("layout", {})).replace("</", "<\\/")
             out["data"]["text/html"] = [
-                f'<div id="{div}" style="width:100%"></div>\n'
+                (PLOTLY_JS if n == 0 else "")
+                + f'<div id="{div}" style="width:100%"></div>\n'
                 f"<script>document.addEventListener('DOMContentLoaded', () => "
                 f'Plotly.newPlot("{div}", {data}, {layout}, '
                 f'{{"responsive": true}}))</script>'

@@ -49,9 +49,8 @@ def source_lines(path, cell_id, cache):
         cache[path] = (ROOT / path).read_text().splitlines()
     lines = cache[path]
     hits = [i for i, l in enumerate(lines) if l == f'{KEY}"id": "{cell_id}",']
-    if (
-        len(hits) != 1
-    ):  # a broken link, not a stale range: exit 2 so callers don't try to auto-fix
+    # a broken link, not a stale range: exit 2 so callers don't try to auto-fix
+    if len(hits) != 1:
         print(f"{path}: cell id {cell_id} found {len(hits)} times", file=sys.stderr)
         sys.exit(2)
     i = hits[0]
@@ -66,9 +65,8 @@ def source_lines(path, cell_id, cache):
 
 
 def main(check):
-    if (
-        not check
-    ):  # canonical serialization first, so computed lines match what gets committed
+    # canonical serialization first, so computed lines match what gets committed
+    if not check:
         for rel in FILES:
             p = ROOT / rel
             text = p.read_text()

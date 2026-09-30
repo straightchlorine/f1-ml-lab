@@ -97,7 +97,4 @@ extra:
     03-regression-laptime.ipynb: "Regresja czasu okrążenia w czterech aktach: porażka na jednym sezonie, więcej danych, zmiana celu na tempo względne i benchmark algorytmów z pomiarem czasu."
     04-classification-podium.ipynb: "Klasyfikacja podium z cech przedwyścigowych: pułapka trafności, wyciek danych, regresja logistyczna, benchmark klasyfikatorów, wagi klas i kalibracja."
     05-error-analysis.ipynb: "Analiza błędów obu modeli: residua regresji, najgorsze okrążenia, macierz pomyłek, kalibracja prawdopodobieństw i niespodzianki, których nie da się przewidzieć."
-    about.md: "Kto zrobił ten projekt, na jakich danych, jak go uruchomić i jak czytać notebooki."
-
-extra_javascript:
-  - https://cdn.plot.ly/plotly-3.1.0.min.js
+    about.md: "Autorzy, pochodzenie danych, uruchamianie i jak czytać notebooki."

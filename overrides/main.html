@@ -6,13 +6,11 @@
   {% set site = config.site_url %}
   {% set lang = config.theme.language %}
   {% if real_page %}
-    {#- Bilingual site built twice (PL at /, EN at /en/) with identical page paths -
-    hreflang pairs are a concatenation. -#}
+    {#- Bilingual site built twice (PL at /, EN at /en/) with identical page paths.
+    hreflang pairs live in sitemap.xml: head alternates make Material's JS fetch
+    <page>/sitemap.xml (404). hooks/seo.py strips Material's own relative ones. -#}
     {% set url_pl = config.extra.lang_bases.pl ~ page.url %}
     {% set url_en = config.extra.lang_bases.en ~ page.url %}
-    <link rel="alternate" hreflang="pl" href="{{ url_pl }}">
-    <link rel="alternate" hreflang="en" href="{{ url_en }}">
-    <link rel="alternate" hreflang="x-default" href="{{ url_pl }}">
   {% endif %}
   <meta property="og:locale" content="{{ config.extra.og_locale }}">
   <meta property="og:locale:alternate" content="{{ config.extra.og_locale_alternate }}">
@@ -50,6 +48,7 @@
         "name": "f1-ml-lab",
         "codeRepository": {{ config.repo_url | tojson }},
         "programmingLanguage": "Python",
+        "license": "https://opensource.org/licenses/MIT",
         "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }]
       }
       {%- if real_page %},
@@ -73,4 +72,48 @@
     ]
   }
   </script>
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  {#- WCAG AA contrast: Material's red (#ef5552) is 3.4:1 on white. Darker red for header
+  and light-scheme links (5.6:1); a light red for links on the dark scheme. -#}
+  <style>
+    [data-md-color-primary=red] {
+      --md-primary-fg-color: #c62828;
+      --md-primary-fg-color--light: #e53935;
+      --md-primary-fg-color--dark: #b71c1c;
+    }
+    [data-md-color-accent=red] { --md-accent-fg-color: #b71c1c; }
+    [data-md-color-scheme=slate] { --md-typeset-a-color: #ef9a9a; }
+    [data-md-color-scheme=slate][data-md-color-accent=red] {
+      --md-accent-fg-color: #ffcdd2;
+      --md-accent-bg-color: hsla(var(--md-hue), 15%, 14%, 1); {#- text on accent, e.g. hovered back-to-top -#}
+    }
+    {#- mkdocs-jupyter sets these for slate later in <body>; `body` wins on specificity -#}
+    body[data-md-color-scheme=slate] .jupyter-wrapper {
+      --jp-mirror-editor-comment-color: #6fb3b3;
+      --jp-mirror-editor-operator-color: #c77dff;
+    }
+    [data-md-color-scheme=slate] { --md-code-hl-constant-color: #a397e8; --md-code-hl-number-color: #ec7b6e; }
+    .md-source__facts { opacity: 1; }
+    .md-header__button:focus-visible, .md-header .md-source:focus-visible { outline-color: #fff; }
+    [data-md-color-scheme=default] .jupyter-wrapper .jp-InputPrompt,
+    [data-md-color-scheme=default] .jupyter-wrapper .jp-OutputPrompt { color: #616161; }
+    [data-md-color-scheme=default] .jupyter-wrapper {
+      --jp-cell-prompt-not-active-font-color: #616161;
+      --jp-cell-prompt-not-active-opacity: 1;
+      --jp-mirror-editor-comment-color: #3c7878;
+      --jp-mirror-editor-number-color: #008100;
+      --jp-mirror-editor-operator-color: #a420f7;
+    }
+    [data-md-color-scheme=default] { --md-code-hl-comment-color: #626262; }
+    .md-footer { --md-footer-fg-color--lighter: hsla(0, 0%, 100%, 0.6); }
+    {#- links inside text need more than colour to stand out -#}
+    .md-typeset a:not(.headerlink):not(.anchor-link):not(.md-content__button):not(.md-button) {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
+  </style>
 {% endblock %}

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Local preview.
 #
-# uv venv --python 3.12 .venv && uv pip install --python .tmpenv/bin/python -r requirements-docs.txt && PY=.tmpenv/bin/python PORT=8055 scripts/preview.sh
+# uv run --isolated --no-project --python 3.12 --with-requirements requirements-docs.txt scripts/preview.sh
+# (PORT=8055 by default)
 set -euo pipefail
 PY=$(realpath -s "$(command -v "${PY:-python3}")")  # absolute, venv symlink kept
 PORT=${PORT:-8055}

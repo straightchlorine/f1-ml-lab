@@ -1,9 +1,11 @@
 version: 2
 
 updates:
-  # requirements-docs.txt (site build) and requirements.txt (notebooks)
+  # bumps the exact pins in requirements-docs.txt;
+  # the >= ranges in requirements.txt already allow new releases, so they stay
   - package-ecosystem: pip
     directory: /
+    versioning-strategy: increase-if-necessary
     schedule:
       interval: weekly
       day: monday

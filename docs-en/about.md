@@ -13,7 +13,7 @@ This site is the record of a Master's-level machine learning course project: six
 
 - The model failures are in the notebooks on purpose: negative `R^2` in the regression, the accuracy trap and data leakage in the classification. We first show why something does not work, and only then the fix.
 - Every model comes with a benchmark that times training and prediction, because the simple model is often both the best and the cheapest.
-- In the English version the commentary (markdown cells) is translated; code, printed output and chart labels remain in Polish.
+- In the English version the commentary (markdown cells) is translated; code, printed output and chart labels are the same in both versions (in Polish, except notebook 00).
 
 ## How to run it
 
@@ -22,10 +22,11 @@ git clone https://github.com/straightchlorine/f1-ml-lab.git
 cd f1-ml-lab
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/python -m ipykernel install --user --name f1-ml-lab   # the kernel the notebooks use
 .venv/bin/jupyter lab   # notebooks in notebooks/, in order 00 -> 05
 ```
 
-Notebook 01 downloads data from FastF1 (the first run takes long, later runs read from cache). The remaining notebooks start from the parquet files.
+Notebooks 00 and 01 download data from FastF1 (the first run takes long, later runs read from cache). Notebooks 02-05 start from the parquet files.
 
 ## Authors
 
@@ -33,3 +34,7 @@ Notebook 01 downloads data from FastF1 (the first run takes long, later runs rea
 - **Jakub Kucharski** - [GitHub](https://github.com/kubson2002k) | [LinkedIn](https://www.linkedin.com/in/jakub-kucharski-360811305/)
 
 Source code: [straightchlorine/f1-ml-lab](https://github.com/straightchlorine/f1-ml-lab). Built with MkDocs Material and mkdocs-jupyter.
+
+## License
+
+Code and notebooks: [MIT](https://github.com/straightchlorine/f1-ml-lab/blob/master/LICENSE). The data in `data/` is derived from Formula 1 timing data through FastF1 and is included so the notebooks run.
