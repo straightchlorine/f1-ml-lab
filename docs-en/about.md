@@ -1,3 +1,7 @@
+---
+title: About the project, authors and data
+---
+
 # About
 
 This site is the record of a Master's-level machine learning course project: six Jupyter notebooks that go from raw Formula 1 data to two models and an analysis of their errors. The notebooks are pre-executed - the Plotly charts are interactive without running anything.

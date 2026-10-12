@@ -25,11 +25,11 @@
         "url": {{ site | tojson }},
         "description": {{ config.site_description | tojson }},
         "inLanguage": {{ lang | tojson }},
-        "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }]
+        "author": [{ "@id": "https://piotrkrzysztof.dev/#piotr" }, { "@id": "https://piotrkrzysztof.dev/#jakub" }]
       },
       {
         "@type": "Person",
-        "@id": {{ (site ~ "#piotr") | tojson }},
+        "@id": "https://piotrkrzysztof.dev/#piotr",
         "name": "Piotr Krzysztof Lis",
         "alternateName": "Piotr Krzysztof",
         "url": "https://piotrkrzysztof.dev",
@@ -37,7 +37,7 @@
       },
       {
         "@type": "Person",
-        "@id": {{ (site ~ "#jakub") | tojson }},
+        "@id": "https://piotrkrzysztof.dev/#jakub",
         "name": "Jakub Kucharski",
         "url": "https://github.com/kubson2002k",
         "sameAs": ["https://github.com/kubson2002k", "https://www.linkedin.com/in/jakub-kucharski-360811305/"]
@@ -49,7 +49,7 @@
         "codeRepository": {{ config.repo_url | tojson }},
         "programmingLanguage": "Python",
         "license": "https://opensource.org/licenses/MIT",
-        "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }]
+        "author": [{ "@id": "https://piotrkrzysztof.dev/#piotr" }, { "@id": "https://piotrkrzysztof.dev/#jakub" }]
       }
       {%- if real_page %},
       {%- set src = page.file.src_path %}
@@ -59,13 +59,13 @@
         "@type": {{ ("TechArticle" if src.endswith(".ipynb") else ("AboutPage" if src == "about.md" else "WebPage")) | tojson }},
         "@id": {{ (page_url ~ "#page") | tojson }},
         "url": {{ page_url | tojson }},
-        "headline": {{ page.title | tojson }},
+        "headline": {{ (page.meta.title or page.title) | tojson }},
         "description": {{ (page.meta.description or config.site_description) | tojson }},
         "inLanguage": {{ lang | tojson }},
         "image": {{ (site ~ "assets/images/social/" ~ ((page.url | trim("/")) or "index") ~ ".png") | tojson }},
         "isPartOf": { "@id": {{ (site ~ "#website") | tojson }} },
         "isBasedOn": { "@id": {{ (config.repo_url ~ "#code") | tojson }} },
-        "author": [{ "@id": {{ (site ~ "#piotr") | tojson }} }, { "@id": {{ (site ~ "#jakub") | tojson }} }],
+        "author": [{ "@id": "https://piotrkrzysztof.dev/#piotr" }, { "@id": "https://piotrkrzysztof.dev/#jakub" }],
         {{ ("workTranslation" if lang == "pl" else "translationOfWork") | tojson }}: { "@id": {{ other | tojson }} }
       }
       {%- endif %}

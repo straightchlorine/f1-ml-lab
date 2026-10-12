@@ -1,3 +1,7 @@
+---
+title: F1 lap-time and podium models
+---
+
 # Machine Learning in F1
 
 Machine learning on Formula 1 data (timing + telemetry via [FastF1](https://docs.fastf1.dev/)).

@@ -59,3 +59,11 @@ Cross-notebook links point at exact lines on GitHub. After editing a notebook, r
 
 Code and notebooks: [MIT](LICENSE). The data in `data/` is derived from Formula 1
 timing data through FastF1 and is included so the notebooks run.
+
+---
+
+<div align="center">
+
+To the only God, be honour and glory for ever and ever.
+
+</div>

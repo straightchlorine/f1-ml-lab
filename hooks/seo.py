@@ -1,12 +1,13 @@
 """MkDocs hooks for the bilingual site.
 
-- Notebook pages have no front matter. Per-page meta descriptions come from
-  `extra.descriptions` (keyed by source file name) and are injected early,
+- Notebook pages have no front matter. Per-page meta descriptions and titles come from
+  `extra.descriptions` / `extra.titles` (keyed by source file name) and are injected early,
   so that social-cards plugin can pick them up.
 - The "view source" button must point at the file as committed.
   Pages in docs/ and docs-en/ are partly symlinks into notebooks/. CI replaces
   those symlinks with rendered copies before building, so the answer comes from
   the git index, not from the working tree.
+- The homepage og:title / twitter:title are made to match <title>.
 - Post-render cleanup: drop Material's relative hreflang links (hreflang pairs
   live in overrides/sitemap.xml), name the search dialog for screen readers,
   and skip the MathJax loader on notebooks without math. 404.html gets the same
@@ -14,6 +15,7 @@
 """
 
 import functools
+import html
 import json
 import logging
 import os
@@ -28,6 +30,10 @@ from mkdocs.plugins import event_priority
 MATERIAL_HREFLANG = re.compile(
     r'\s*<link rel="alternate" href="[^"]*" hreflang="[^"]*">'
 )
+TITLE_TAG = re.compile(r'(<meta property="(?:og|twitter):title" content=")([^"]*)(")')
+
+# the social plugin emits twitter:* with property= only; crawlers read name=
+TWITTER_META = re.compile(r'<meta property="(twitter:[a-z:]+)"')
 MATHJAX_BLOCK = re.compile(
     r"<!-- Load mathjax -->.*?<!-- End of mathjax configuration -->", re.S
 )
@@ -76,6 +82,9 @@ def on_page_markdown(markdown, page, config, files):
     desc = (config.extra.get("descriptions") or {}).get(page.file.src_path)
     if desc and not page.meta.get("description"):
         page.meta["description"] = desc
+    title = (config.extra.get("titles") or {}).get(page.file.src_path)
+    if title and not page.meta.get("title"):
+        page.meta["title"] = title  # Material renders "<title> - <site_name>"
     return markdown
 
 
@@ -101,8 +110,15 @@ def _clean(output, config, where):
     return output
 
 
+@event_priority(-100)  # after the social plugin has injected its meta tags
 def on_post_page(output, page, config):
     output = _clean(output, config, page.file.src_path)
+    if page.is_homepage and page.meta.get("title"):
+        # social plugin uses the bare site name on the homepage, while <title> is
+        # "<page title> - <site name>": make og:title / twitter:title match <title>
+        full = html.escape(f"{page.meta['title']} - {config.site_name}")
+        output = TITLE_TAG.sub(lambda m: f"{m.group(1)}{full}{m.group(3)}", output)
+    output = TWITTER_META.sub(r'<meta name="\1" property="\1"', output)
     if page.file.src_path.endswith(".ipynb") and not _has_math(page.file.abs_src_path):
         output = MATHJAX_BLOCK.sub("", output)
     return output

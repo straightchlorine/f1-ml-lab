@@ -1,0 +1,25 @@
+# Uczenie maszynowe w F1
+
+> Sześć notebooków Jupyter z wynikami, które prowadzą od surowych danych Formuły 1 (FastF1) do modeli tempa okrążenia i podium oraz analizy ich błędów. Projekt zaliczeniowy (studia magisterskie) Piotra Krzysztofa Lisa i Jakuba Kucharskiego.
+
+Główne zbiory obejmują sezony 2023-2024 (46 wyścigów); eksperymenty 'czy więcej sezonów pomoże' w notebookach 03 i 04 używają lat 2018-2024. Nieudane podejścia zostały w nich celowo: notebooki o regresji i klasyfikacji pokazują, dlaczego dane podejście zawodzi, zanim pokażą poprawkę. Wykresy Plotly są interaktywne bez uruchamiania czegokolwiek. Ten sam serwis istnieje po angielsku pod adresem https://f1.piotrkrzysztof.dev/en/.
+
+## Strony
+
+- [Wprowadzenie](https://f1.piotrkrzysztof.dev/): uczenie maszynowe na danych Formuły 1, od surowych danych FastF1 do modeli tempa okrążenia i podium oraz analizy ich błędów
+- [Pierwszy kontakt z danymi FastF1](https://f1.piotrkrzysztof.dev/00-data-load/): API FastF1 na przykładzie Grand Prix Włoch 2024: okrążenia, pogoda, telemetria i pierwszy wykres czasu okrążenia względem wieku opon
+- [Budowa dwóch zbiorów danych F1](https://f1.piotrkrzysztof.dev/01-build-dataset/): zbiory z sezonów 2023-2024: pętla po wyścigach, czyszczenie okrążeń, czasy kwalifikacji i tabela kierowca-wyścig
+- [Eksploracja danych (EDA) w F1](https://f1.piotrkrzysztof.dev/02-eda/): rozkład czasów okrążeń, ile zmienności tłumaczy tor, degradacja opon po usunięciu efektu paliwa i związek pozycji startowej z podium
+- [Regresja czasu okrążenia w F1](https://f1.piotrkrzysztof.dev/03-regression-laptime/): nieudany model na jednym sezonie, dołożenie drugiego sezonu, tempo względne jako cel, benchmark z pomiarem czasu i siedem sezonów
+- [Klasyfikacja podium w Formule 1](https://f1.piotrkrzysztof.dev/04-classification-podium/): pułapka trafności, wyciek danych, regresja logistyczna, benchmark klasyfikatorów, wagi klas i kalibracja
+- [Analiza błędów modeli w F1](https://f1.piotrkrzysztof.dev/05-error-analysis/): residua regresji, najgorsze okrążenia, macierz pomyłek, kalibracja prawdopodobieństw i podia zdobyte z dalekich pól startowych
+- [O projekcie, autorach i danych](https://f1.piotrkrzysztof.dev/about/): autorzy, pochodzenie danych z FastF1, uruchamianie notebooków, jak je czytać i licencja
+
+## Opcjonalne
+
+- [Repozytorium](https://github.com/straightchlorine/f1-ml-lab): notebooki, zbiory danych i skrypty
+- [Wersja angielska](https://f1.piotrkrzysztof.dev/en/): ten sam projekt po angielsku
+- [Autor](https://piotrkrzysztof.dev/): Piotr Krzysztof Lis
+- [Autor](https://www.linkedin.com/in/jakub-kucharski-360811305/): Jakub Kucharski
+
+Jedynemu Bogu, niech będzie cześć i chwała na wieki wieków

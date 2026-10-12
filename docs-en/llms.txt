@@ -1,0 +1,25 @@
+# Machine Learning in F1
+
+> Six pre-executed Jupyter notebooks that go from raw Formula 1 data (FastF1) to lap-pace and podium models and an analysis of their errors. A Master's course project by Piotr Krzysztof Lis and Jakub Kucharski.
+
+The main datasets cover the 2023-2024 seasons (46 races); the 'will more seasons help' experiments in notebooks 03 and 04 use 2018-2024. Failed attempts are kept in on purpose: the regression and classification notebooks show why an approach breaks before they show the fix. The Plotly charts are interactive without running anything. The same site exists in Polish at https://f1.piotrkrzysztof.dev/.
+
+## Pages
+
+- [Introduction](https://f1.piotrkrzysztof.dev/en/): Machine learning on Formula 1 data, from raw FastF1 data to lap-pace and podium models and an analysis of their errors
+- [A first look at the FastF1 data](https://f1.piotrkrzysztof.dev/en/00-data-load/): the FastF1 API on the 2024 Italian Grand Prix: laps, weather, one driver's telemetry and a plot of lap time against tire age
+- [Building the two F1 datasets](https://f1.piotrkrzysztof.dev/en/01-build-dataset/): the 2023-2024 datasets: qualifying times from a separate session, a loop over races, lap cleaning and a driver-race table
+- [Exploring the F1 data (EDA)](https://f1.piotrkrzysztof.dev/en/02-eda/): lap-time distribution, how much variance the track explains, tire degradation without the fuel effect, and grid position vs podium
+- [Lap-time regression on F1 data](https://f1.piotrkrzysztof.dev/en/03-regression-laptime/): a failed first model on one season, adding a second season, relative pace as the target, a timed benchmark and a test with seven seasons
+- [Podium classification in F1](https://f1.piotrkrzysztof.dev/en/04-classification-podium/): why accuracy misleads, data leakage, logistic regression, a classifier benchmark, class weights and calibration
+- [Error analysis of the F1 models](https://f1.piotrkrzysztof.dev/en/05-error-analysis/): regression residuals, worst-predicted laps, the confusion matrix, probability calibration and podiums from far back on the grid
+- [About the project, authors and data](https://f1.piotrkrzysztof.dev/en/about/): authors, where the FastF1 data comes from, how to run the notebooks, how to read them and the license
+
+## Optional
+
+- [Source repository](https://github.com/straightchlorine/f1-ml-lab): notebooks, datasets and scripts
+- [Polish version](https://f1.piotrkrzysztof.dev/): the same project in Polish
+- [Author](https://piotrkrzysztof.dev/): Piotr Krzysztof Lis
+- [Author](https://www.linkedin.com/in/jakub-kucharski-360811305/): Jakub Kucharski
+
+To the only God, be honour and glory for ever and ever.

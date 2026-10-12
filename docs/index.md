@@ -1,3 +1,7 @@
+---
+title: Modele tempa i podium na danych F1
+---
+
 # Uczenie maszynowe w F1
 
 Uczenie maszynowe na danych z Formuły 1 (timing + telemetria przez [FastF1](https://docs.fastf1.dev/)).

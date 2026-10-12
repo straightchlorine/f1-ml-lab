@@ -1,3 +1,7 @@
+---
+title: O projekcie, autorach i danych
+---
+
 # O projekcie
 
 Ten serwis to zapis projektu zaliczeniowego z uczenia maszynowego (studia magisterskie): sześć notebooków Jupyter, które prowadzą od surowych danych Formuły 1 do dwóch modeli i analizy ich błędów. Notebooki są wykonane - wykresy Plotly są interaktywne bez uruchamiania czegokolwiek.

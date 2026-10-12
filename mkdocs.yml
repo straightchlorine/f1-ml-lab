@@ -89,12 +89,19 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/straightchlorine/f1-ml-lab
       name: Kod źródłowy na GitHubie
+  titles:
+    00-data-load.ipynb: "Pierwszy kontakt z danymi FastF1"
+    01-build-dataset.ipynb: "Budowa dwóch zbiorów danych F1"
+    02-eda.ipynb: "Eksploracja danych (EDA) w F1"
+    03-regression-laptime.ipynb: "Regresja czasu okrążenia w F1"
+    04-classification-podium.ipynb: "Klasyfikacja podium w Formule 1"
+    05-error-analysis.ipynb: "Analiza błędów modeli w F1"
   descriptions:
-    index.md: "Uczenie maszynowe na danych Formuły 1: od surowych danych FastF1 do modeli tempa okrążenia i podium oraz analizy ich błędów."
+    index.md: "Uczenie maszynowe na danych Formuły 1: od surowych danych FastF1 do modeli tempa okrążenia i podium oraz analizy ich błędów. Sześć notebooków z wynikami."
     00-data-load.ipynb: "Pierwszy kontakt z API FastF1 na przykładzie Grand Prix Włoch 2024: okrążenia, pogoda, telemetria i pierwszy wykres czasu okrążenia względem wieku opon."
     01-build-dataset.ipynb: "Budowa zbiorów danych z sezonów 2023-2024: pętla po wyścigach, czyszczenie okrążeń, czasy kwalifikacji i tabela kierowca-wyścig pod klasyfikację podium."
     02-eda.ipynb: "Eksploracja danych: rozkład czasów okrążeń, ile zmienności tłumaczy tor, degradacja opon po usunięciu efektu paliwa i związek pozycji startowej z podium."
-    03-regression-laptime.ipynb: "Regresja czasu okrążenia w czterech aktach: porażka na jednym sezonie, więcej danych, zmiana celu na tempo względne i benchmark algorytmów z pomiarem czasu."
+    03-regression-laptime.ipynb: "Regresja czasu okrążenia: nieudany model na jednym sezonie, dołożenie drugiego sezonu, tempo względne jako cel, benchmark z pomiarem czasu i siedem sezonów."
     04-classification-podium.ipynb: "Klasyfikacja podium z cech przedwyścigowych: pułapka trafności, wyciek danych, regresja logistyczna, benchmark klasyfikatorów, wagi klas i kalibracja."
-    05-error-analysis.ipynb: "Analiza błędów obu modeli: residua regresji, najgorsze okrążenia, macierz pomyłek, kalibracja prawdopodobieństw i niespodzianki, których nie da się przewidzieć."
-    about.md: "Autorzy, pochodzenie danych, uruchamianie i jak czytać notebooki."
+    05-error-analysis.ipynb: "Analiza błędów obu modeli: residua regresji, najgorsze okrążenia, macierz pomyłek, kalibracja prawdopodobieństw i podia zdobyte z dalekich pól startowych."
+    about.md: "O projekcie: autorzy, pochodzenie danych z FastF1, uruchamianie notebooków, jak je czytać (w tym celowe porażki modeli) oraz licencja MIT i użyte narzędzia."
