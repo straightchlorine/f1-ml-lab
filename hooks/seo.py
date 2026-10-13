@@ -68,6 +68,22 @@ def _repo_path(repo_root, rel):
     return rel
 
 
+def _git(root, *args):
+    out = subprocess.run(["git", *args], cwd=root, capture_output=True, text=True)
+    return out.stdout.strip() if out.returncode == 0 else ""
+
+
+@functools.lru_cache(maxsize=None)
+def _lastmod(root, path):
+    """Date of the last commit touching `path` (for the sitemap).
+
+    Empty on a shallow checkout, where every file would get the newest commit date.
+    """
+    if _git(root, "rev-parse", "--is-shallow-repository") != "false":
+        return ""
+    return _git(root, "log", "-1", "--format=%cs", "--", path)
+
+
 def _has_math(ipynb_path):
     nb = json.loads(open(ipynb_path, encoding="utf-8").read())
     return any(
@@ -85,6 +101,10 @@ def on_page_markdown(markdown, page, config, files):
     title = (config.extra.get("titles") or {}).get(page.file.src_path)
     if title and not page.meta.get("title"):
         page.meta["title"] = title  # Material renders "<title> - <site_name>"
+    # sitemap.xml is rendered before on_page_context, so lastmod is set here
+    repo_root = os.path.dirname(os.path.abspath(config.config_file_path))
+    rel = os.path.relpath(os.path.join(config.docs_dir, page.file.src_path), repo_root)
+    page.meta["lastmod"] = _lastmod(repo_root, _repo_path(repo_root, rel))
     return markdown
 
 
