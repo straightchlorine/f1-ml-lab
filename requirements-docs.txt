@@ -1,6 +1,6 @@
 # Site build deps (CI, scripts/preview.sh). Preview:
 #   uv run --isolated --no-project --python 3.12 --with-requirements requirements-docs.txt scripts/preview.sh
 mkdocs==1.6.1
-mkdocs-material[imaging]==9.7.7
-mkdocs-jupyter==0.26.3
-nbconvert==7.17.1
+mkdocs-material[imaging]==9.8.0
+mkdocs-jupyter==0.27.0
+nbconvert==7.17.2
